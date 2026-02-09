@@ -1,0 +1,6 @@
+tfmc\justin\creators\LetterCreator.class
+tfmc\justin\listeners\LetterOpenListener.class
+tfmc\justin\validators\LetterValidator.class
+tfmc\justin\letters.class
+tfmc\justin\listeners\BookSignListener.class
+tfmc\justin\config\LetterConfig.class
