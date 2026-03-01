@@ -1,0 +1,89 @@
+classDiagram
+    class letters {
+        -letters instance
+        -ItemAPI api
+        +onEnable() void
+        +onDisable() void
+        +getInstance() letters
+        +getApi() ItemAPI
+    }
+
+    class LetterConfig {
+        -JavaPlugin plugin
+        -String letterPath
+        -String writtenLetterPath
+        -String writtenLetterOpenPath
+        -boolean hideAuthor
+        -boolean useTitleAsName
+        +LetterConfig(plugin: JavaPlugin)
+        +getLetterPath() String
+        +getWrittenLetterPath() String
+        +getWrittenLetterOpenPath() String
+        +shouldHideAuthor() boolean
+        +shouldUseTitleAsName() boolean
+        +getMessage(path: String, defaultMessage: String) String
+    }
+
+    class LetterValidator {
+        -JavaPlugin plugin
+        -ItemAPI api
+        -LetterConfig config
+        -NamespacedKey sealedLetterKey
+        +LetterValidator(plugin: JavaPlugin, api: ItemAPI, config: LetterConfig)
+        +isLetter(item: ItemStack) boolean
+        +isSealedLetter(item: ItemStack) boolean
+        +getSealedLetterKey() NamespacedKey
+    }
+
+    class LetterCreator {
+        -JavaPlugin plugin
+        -ItemAPI api
+        -LetterConfig config
+        -NamespacedKey sealedLetterKey
+        +LetterCreator(plugin: JavaPlugin, api: ItemAPI, config: LetterConfig, key: NamespacedKey)
+        +createSealedLetter(signedBookMeta: BookMeta) ItemStack
+        +createOpenedLetter(sealedBookMeta: BookMeta) ItemStack
+        -copyBookContent(source: BookMeta, target: BookMeta) void
+    }
+
+    class BookSignListener {
+        -JavaPlugin plugin
+        -LetterConfig config
+        -LetterValidator validator
+        -LetterCreator creator
+        +BookSignListener(plugin: JavaPlugin, config: LetterConfig, validator: LetterValidator, creator: LetterCreator)
+        +onBookSign(event: PlayerEditBookEvent) void
+        -handleCreationFailure(player: Player) void
+        -sendSuccessMessage(player: Player) void
+    }
+
+    class LetterOpenListener {
+        -JavaPlugin plugin
+        -LetterConfig config
+        -LetterValidator validator
+        -LetterCreator creator
+        +LetterOpenListener(plugin: JavaPlugin, config: LetterConfig, validator: LetterValidator, creator: LetterCreator)
+        +onBookOpen(event: PlayerInteractEvent) void
+        -handleOpeningFailure(player: Player) void
+        -sendOpeningMessage(player: Player) void
+    }
+
+    letters "1" --> "1" LetterConfig : creates
+    letters "1" --> "1" LetterValidator : creates
+    letters "1" --> "1" LetterCreator : creates
+    letters "1" --> "1" BookSignListener : registers
+    letters "1" --> "1" LetterOpenListener : registers
+    
+    LetterValidator "1" --> "1" LetterConfig : uses
+    LetterValidator "1" --> "1" ItemAPI : uses
+    
+    LetterCreator "1" --> "1" LetterConfig : uses
+    LetterCreator "1" --> "1" ItemAPI : uses
+    
+    BookSignListener "1" --> "1" LetterConfig : uses
+    BookSignListener "1" --> "1" LetterValidator : uses
+    BookSignListener "1" --> "1" LetterCreator : uses
+    
+    LetterOpenListener "1" --> "1" LetterConfig : uses
+    LetterOpenListener "1" --> "1" LetterValidator : uses
+    LetterOpenListener "1" --> "1" LetterCreator : uses
