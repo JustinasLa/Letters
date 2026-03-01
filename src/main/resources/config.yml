@@ -2,21 +2,22 @@
 # Letters Plugin Configuration
 # ====================================
 
-# Item paths (from MMOItems via TLibs)
+# Item paths (from MMOItems or ItemsAdder via TLibs)
 items:
-  
   letter: "m.books.letter"                             # Unsigned writable book item
   written-letter: "m.books.written_letter"             # Sealed letter (signed, unopened)
   written-letter-open: "m.books.written_letter_open"   # Opened letter (broken seal)
+  
+  # Vanilla item example: "v.iron_ingot"
+  # ItemsAdder item example: "ia.tfmc:written_letter"
 
 # Messages sent to players
 # Supports hex colors with &#RRGGBB
 messages:
-  
-  letter-signed: "&aYou have successfully signed your letter!"                          # When a player successfully signs a letter
-  letter-opened: "&7The seal breaks as you open the letter..."                          # When a sealed letter is opened for the first time
-  letter-creation-failed: "&cFailed to create letter. Please make a ticket." # If letter creation fails
-  letter-open-failed: "&cFailed to open letter. Please make a ticket."       # If letter opening fails
+  letter-signed: "&aYou have successfully signed your letter!"
+  letter-opened: "&7The seal breaks as you open the letter..."
+  letter-creation-failed: "&cFailed to create letter. Please make a ticket."
+  letter-open-failed: "&cFailed to open letter. Please make a ticket."
 
 # Feature settings
 settings:
